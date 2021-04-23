@@ -58,6 +58,7 @@ app.post("/api/decrypt", (req, res) => {
 	}
 });
 
-app.listen(8080, () => {
-	console.log("Listening on port 8080");
+let port = process.env.PORT || 3000
+app.listen(port, () => {
+	console.log("Listening on port 3000");
 });
