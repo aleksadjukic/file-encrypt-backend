@@ -15,6 +15,10 @@ app.use(upload());
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 
+app.use('/', (req, res) => {
+  res.json({message:"Welcome to the file-encrypt API"})
+})
+
 app.get("/api/generateKeys", (req, res) => {
 	res.json(keys);
 });
