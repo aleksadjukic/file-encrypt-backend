@@ -3,23 +3,28 @@ const fs = require("fs");
 const express = require("express");
 const cors = require("cors");
 const upload = require("express-fileupload");
+const dotenv = require("dotenv");
+dotenv.config();
 const generateKeys = require("./helpers/generateKeys");
 let keys = generateKeys();
+
 const iv = crypto.randomBytes(16);
 
 const app = express();
 
 app.use(cors());
+
 app.use(upload());
 
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 
-app.use('/', (req, res) => {
-  res.json({message:"Welcome to the file-encrypt API"})
-})
+app.get("/", (req, res) => {
+	res.json({ message: "Welcome to the file-encrypt API" });
+});
 
 app.get("/api/generateKeys", (req, res) => {
+	console.log(keys);
 	res.json(keys);
 });
 
@@ -52,13 +57,13 @@ app.post("/api/decrypt", (req, res) => {
 
 		var fileContents = Buffer.from(decrypted, "base64");
 		console.log(fileContents);
-		res.json({ name: fileToDecrypt.name.replace('.enc', ''), fileContents });
+		res.json({ name: fileToDecrypt.name.replace(".enc", ""), fileContents });
 	} catch (error) {
 		res.json({ status: "fail", message: "Bad decryption attempt. Try another key!" });
 	}
 });
 
-let port = process.env.PORT || 3000
+let port = process.env.PORT || 3000;
 app.listen(port, () => {
 	console.log("Listening on port 3000");
 });
