@@ -57,7 +57,7 @@ app.post("/api/decrypt", (req, res) => {
 
 		var fileContents = Buffer.from(decrypted, "base64");
 		console.log(fileContents);
-		res.json({ name: fileToDecrypt.name.replace(".enc", ""), fileContents });
+		res.json({ name: fileToDecrypt.name.replace(/\.enc$/, ""), fileContents });
 	} catch (error) {
 		res.json({ status: "fail", message: "Bad decryption attempt. Try another key!" });
 	}
